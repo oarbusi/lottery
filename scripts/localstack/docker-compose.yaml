@@ -1,0 +1,47 @@
+version: '2.1'
+
+services:
+  localstack:
+    container_name: localstack-lottery
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+      - "4571:4571"
+      - "${PORT_WEB_UI-8081}:${PORT_WEB_UI-8081}"
+    environment:
+      - SERVICES=mysql
+      - LS_LOG=debug
+      - DATA_DIR=/tmp/localstack/data
+      - PORT_WEB_UI=8081
+      - LAMBDA_REMOTE_DOCKER=false
+      - LAMBDA_EXECUTOR=local
+      - KINESIS_ERROR_PROBABILITY=0.0
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - local-network
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-localstack
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'lottery'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'mypassword123'
+      MYSQL_ROOT_PASSWORD: 'mypassword123'
+      SERVICE_TAGS: dev
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    networks:
+      - local-network
+    volumes:
+        - ./localstack-init:/docker-entrypoint-initdb.d
+
+
+networks:
+  local-network:
+    driver: "bridge"

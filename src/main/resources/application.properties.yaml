@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: local
+  jpa:
+    open-in-view: false
+
+db:
+  mysql:
+    url: jdbc:mysql://localhost:3306/lottery?createDatabaseIfNotExist=false&useSSL=false&serverTimezone=UTC
+    username: user
+    password: mypassword123
