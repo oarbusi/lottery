@@ -18,4 +18,7 @@ class LotteryParticipantService(private val lotteryParticipantRepository: Lotter
     fun isParticipantRegistered(id: Long): Boolean = lotteryParticipantRepository.findById(id).isPresent
 
     fun getParticipants(): List<LotteryParticipant> = lotteryParticipantRepository.findAll()
+    fun getParticipantById(lotteryParticipantId: Long): LotteryParticipant {
+        return lotteryParticipantRepository.findById(lotteryParticipantId).get()
+    }
 }

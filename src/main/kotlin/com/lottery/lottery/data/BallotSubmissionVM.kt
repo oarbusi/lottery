@@ -1,3 +1,7 @@
 package com.lottery.lottery.data
 
-data class BallotSubmissionVM(val lotteryParticipantId: Long)
+import com.fasterxml.jackson.annotation.JsonProperty
+
+class BallotSubmissionVM( @JsonProperty("participant_id") val lotteryParticipantId: Long) {
+    constructor() : this(0) // default constructor for Jackson
+}

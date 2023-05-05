@@ -2,6 +2,7 @@ package com.lottery.lottery.services
 
 import com.lottery.lottery.data.BallotSubmissionVM
 import com.lottery.lottery.entities.Ballot
+import com.lottery.lottery.entities.LotteryParticipant
 import com.lottery.lottery.exceptions.NoWinnerFoundException
 import com.lottery.lottery.repositories.BallotRepository
 import org.junit.jupiter.api.*
@@ -10,7 +11,7 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
-import java.sql.Date
+import java.time.LocalDate
 import java.util.*
 
 
@@ -28,7 +29,7 @@ internal class BallotServiceTest {
     private lateinit var ballotService: BallotService
 
     var DATE_STRING = "2023-01-01"
-    var DATE = Date.valueOf("2023-01-01")
+    var DATE = LocalDate.parse(DATE_STRING)
     var BALLOT_NUMBER_1 = 1
     var BALLOT_NUMBER_2 = 2
 
@@ -59,12 +60,14 @@ internal class BallotServiceTest {
     fun getWinnerBallot_whenWinnerBallotExists_shouldReturnWinnerBallot() {
         `when`(ballotRepository.findByDateAndIsWinner(DATE, true))
             .thenReturn(Optional.of(Ballot(lotteryParticipantId, BALLOT_NUMBER_1, DATE, true)))
+        `when`(lotteryParticipantService.getParticipantById(lotteryParticipantId))
+            .thenReturn(LotteryParticipant("name", "email"))
 
-        val ballot = ballotService.getWinnerBallot(DATE_STRING)
+        val winner = ballotService.getWinnerBallot(DATE_STRING)
 
-        assertEquals(ballot.lotteryParticipantId, lotteryParticipantId)
-        assertEquals(ballot.date, DATE)
-        assertEquals(ballot.isWinner, true)
+        assertEquals(winner.name, "name")
+        assertEquals(winner.email, "email")
+        assertEquals(winner.date, DATE.toString())
     }
 
     @Test

@@ -1,19 +1,6 @@
 
+# Requirements
 
-# Run application locally 
-First you need to run the following command to start localstack and fill the database 
-
-```docker-compose --project-name=lottery up -d```
-
-Then you can run the application with the following command
-
-```./gradlew runLocal```
-
-
-did't add caching for simplicity sake, but it would be a good idea to add it for some endpoints
-
-# TODO: REMOVE THIS
-You will need to create a service that handles a lottery system
 
 Requirements are:
 - The service will allow anyone to register as a lottery participant.
@@ -23,9 +10,44 @@ Requirements are:
 - The service will have to persist the data regarding the lottery.
 - Provide a README.md
 
-Be creative and do not limit yourself by those requirements: use this exercise to show us what you can do best and what you are passionate about. Let us know if the requirements are not clear or if you have any questions.
+# Prerequisites to run application locally 
+This project uses `java 17` and `docker`
+First you need to run the following command to start localstack and fill the database with some initial lottery participants
 
-Some additional information about Bynder that might be useful in the assignment:
-- Incorrect domain modelling has been an issue in Bynder's past, we have solved many company-wide problems by moving towards software guided by Domain Driven Design.
-- We prefer simplicity over complexity in our software solutions.
-- We value readable and maintainable code.
+```docker-compose --project-name=lottery up -d```
+
+With the docker container running the application is ready to be run. By default, it will run in port 8080
+
+# Use the application
+
+The application is a REST API that exposes the following endpoints:
+
+```POST /register - Register a new lottery participant```
+Body needs to be a JSON with the following format:
+```
+{
+    "name": "Name of the participant",
+    "email": "Email of the participant",
+}
+```
+
+```GET /participants - Get all registered participants```
+
+```POST /ballot - Submit a ballot for the current date```
+Body needs to be a JSON with the following format:
+```
+{
+    {"participant_id": 1}
+}
+```
+
+
+```GET /winner/{date} - Get the winning ballot for a specific date```
+where the date has to follow a format of yyyy-mm-dd
+
+
+
+Improvements to be done:
+- Improve testing
+- Add caching
+- Add authentication of some kind

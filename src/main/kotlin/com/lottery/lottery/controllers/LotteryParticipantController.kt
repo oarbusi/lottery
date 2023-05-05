@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class LotteryParticipantController(val lotteryParticipantService: LotteryParticipantService) {
 
-    @PostMapping("/register-participant")
+    @PostMapping("/register")
     fun registerParticipant(@RequestBody registerParticipantVM: RegisterParticipantVM): LotteryParticipant {
         return lotteryParticipantService.registerParticipant(registerParticipantVM)
     }
