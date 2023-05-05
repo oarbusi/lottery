@@ -10,6 +10,7 @@ INSERT INTO lottery_participant (id, name, email) VALUES (2, 'Bob', 'bob@example
 CREATE TABLE ballot (
    id BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
    lottery_participant_id BIGINT(20) NOT NULL,
+   ballot_number INT NOT NULL,
    date TIMESTAMP NOT NULL DEFAULT CURRENT_DATE,
    is_winner BOOLEAN NOT NULL DEFAULT FALSE,
    FOREIGN KEY (lottery_participant_id) REFERENCES lottery_participant(id)

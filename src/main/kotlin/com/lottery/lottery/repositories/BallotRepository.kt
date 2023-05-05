@@ -9,7 +9,7 @@ import java.util.Optional
 @Repository
 interface BallotRepository: JpaRepository<Ballot, Long> {
 
-    fun findByDateAndWinner(date: Date, winner: Boolean): Optional<Ballot>
+    fun findByDateAndIsWinner(date: Date, winner: Boolean): Optional<Ballot>
 
     fun findByDate(date: Date): List<Ballot>
 }

@@ -57,7 +57,7 @@ internal class BallotServiceTest {
 
     @Test
     fun getWinnerBallot_whenWinnerBallotExists_shouldReturnWinnerBallot() {
-        `when`(ballotRepository.findByDateAndWinner(DATE, true))
+        `when`(ballotRepository.findByDateAndIsWinner(DATE, true))
             .thenReturn(Optional.of(Ballot(lotteryParticipantId, BALLOT_NUMBER_1, DATE, true)))
 
         val ballot = ballotService.getWinnerBallot(DATE_STRING)
@@ -69,7 +69,7 @@ internal class BallotServiceTest {
 
     @Test
     fun getWinnerBallot_whenWinnerBallotDoesNotExists_shouldThrowNoWinnerFoundException() {
-        `when`(ballotRepository.findByDateAndWinner(DATE, true))
+        `when`(ballotRepository.findByDateAndIsWinner(DATE, true))
             .thenReturn(Optional.empty())
 
         Assertions.assertThrows(NoWinnerFoundException::class.java) {

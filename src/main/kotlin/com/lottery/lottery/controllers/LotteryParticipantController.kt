@@ -13,7 +13,6 @@ class LotteryParticipantController(val lotteryParticipantService: LotteryPartici
 
     @PostMapping("/register-participant")
     fun registerParticipant(@RequestBody registerParticipantVM: RegisterParticipantVM): LotteryParticipant {
-        //TODO: validate input and maybe serialize response???
         return lotteryParticipantService.registerParticipant(registerParticipantVM)
     }
 

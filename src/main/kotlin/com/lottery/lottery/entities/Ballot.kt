@@ -9,7 +9,7 @@ class Ballot(
     @Column(name = "lottery_participant_id") val lotteryParticipantId: Long,
     @Column(name = "ballot_number") val ballotNumber: Int,
     @Column(name = "date") val date: Date,
-    @Column(name = "is_winner") val isWinner: Boolean
+    @Column(name = "is_winner") var isWinner: Boolean
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
