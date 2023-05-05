@@ -13,7 +13,7 @@ import kotlin.random.Random
 class SelectLotteryWinnerTask(
     private val ballotService: BallotService
 ) {
-
+    // This implementation assumes that not always there will be a winner for a given date
     @Scheduled(cron = "0 0 0 * * *")
     fun selectWinner(date: LocalDate? = null) {
         val ballotWinner = Random.nextInt(MIN_BALLOT_NUMBER, MAX_BALLOT_NUMBER)
